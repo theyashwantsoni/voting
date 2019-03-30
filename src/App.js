@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Login from './components/login/Login';
 import Home from './components/home/Home';
+import Admin from './components/admin/Admin';
+
 import {
   BrowserRouter as Router,
   Route
@@ -11,6 +13,9 @@ import {
   const Homemod = () => (
 		<Home />
 		);
+	const Adminmod = () => (
+			<Admin />
+	);
 class App extends Component {
 	render() {
 		return (
@@ -18,6 +23,7 @@ class App extends Component {
 			  <div className="App">
 				<Route exact path="/home" component={Homemod} />
 				<Route exact path="/" component={Loginmod} />
+				<Route exact path="/admin" component={Adminmod} />
 			  </div>
 			</Router>
 		  );
