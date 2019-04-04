@@ -2,8 +2,8 @@ import React, { Component } from "react";
 
 
 import { Row,Checkbox, Form, FormGroup, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
-import './login.sass';
-import { isEmail, isEmpty, isLength, isContainWhiteSpace } from 'shared/validator';
+import './login.css';
+import { isEmail, isEmpty, isLength, isContainWhiteSpace } from '../../shared/validator';
 class Login extends Component {
 
     constructor(props) {
@@ -73,7 +73,8 @@ class Login extends Component {
 
         if(errors === true){
             sessionStorage.setItem('user',formData.email);
-            alert(sessionStorage.getItem('user'));
+            sessionStorage.setItem('aadhar',formData.password);
+            alert(sessionStorage.getItem('user')+""+sessionStorage.getItem('aadhar'));
             // this.s/tate.checkboxChecked ? sessionStorage.setItem('user',formData.email):alert('no session');
             window.location="http://localhost:3000/home";
         } else {
@@ -110,8 +111,8 @@ class Login extends Component {
                         }
                         </FormGroup >
                         <FormGroup controlId="password" validationState={ formSubmitted ? (errors.password ? 'error' : 'success') : null }>
-                            <ControlLabel>Password</ControlLabel>
-                            <FormControl type="password" name="password" placeholder="Enter your password" onChange={this.handleInputChange} />
+                            <ControlLabel>Adhar</ControlLabel>
+                            <FormControl type="password" name="password" placeholder="Enter your aadhar" onChange={this.handleInputChange} />
                         { errors.password && 
                             <HelpBlock>{errors.password}</HelpBlock> 
                         }

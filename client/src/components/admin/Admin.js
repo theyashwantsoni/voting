@@ -1,17 +1,59 @@
 import React, { Component } from 'react';
 import { Row,Checkbox, Form, FormGroup, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
-import './admin.sass';
-import { isEmail, isEmpty, isLength, isContainWhiteSpace } from 'shared/validator';
-
+import './admin.css';
+import { isEmail, isEmpty, isLength, isContainWhiteSpace } from '../../shared/validator';
+import Election from "../../contracts/Election.json";
+import getWeb3 from "../../utils/getWeb3";
+import Web3 from 'web3'
 class Admin extends Component {
     constructor(props) {
         super(props)        
         this.state = {
-            hassession:sessionStorage.getItem('user'),
-            formData: {}, 
             
+            hassession:sessionStorage.getItem('user'),
+            hasaadhar:sessionStorage.getItem('aadhar'),
+            formData: {}, 
+            formSubmitted: false,
+            loading: false ,
+            storageValue2: 0, web3: null, accounts: null, contract: null,
+            storageValue1:0,storageValue3:0
         };
-    }
+    } 
+    componentDidMount = async () => {
+        try {
+          const web3 = await getWeb3();
+    
+          const accounts = await web3.eth.getAccounts();
+          const networkId = await web3.eth.net.getId();
+          const deployedNetwork = Election.networks[networkId];
+          const instance = new web3.eth.Contract(
+            Election.abi,
+            deployedNetwork && deployedNetwork.address,
+          );
+    
+          
+          this.setState({ web3, accounts, contract: instance },this.runExample);
+        } catch (error) {
+          // Catch any errors for any of the above operations.
+          // alert(
+          //   `Failed to load web3, accounts, or contract. Check console for details.`,
+          // );
+          console.error(error);
+        }
+      };
+    
+      runExample = async () => {
+        const { accounts, contract } = this.state;
+
+        const response1 = await contract.methods.get(11111111).call();
+        const response2 = await contract.methods.get(22222222).call();
+        const response3 = await contract.methods.get(33333333).call();
+
+        this.setState({ storageValue1: response1 });
+        this.setState({ storageValue2: response2 });
+        this.setState({ storageValue3: response3 });
+      };
+  
     handleInputChange = (event) => {
         const target = event.target;
         const value = target.value;
@@ -26,8 +68,8 @@ class Admin extends Component {
     }
 
   render() {
-    const data =[{"lang":"golang"},{"lang":"c"},{"lang":"python"},{"lang":"javascript"}];
-    const listItems = data.map((d) =><ul className="Label">{d.lang}</ul> );
+    const data =[{"lang":"ironman","val":"11111111"},{"lang":"captainAmreica","val":"22222222"},{"lang":"pepper","val":"33333333"}];
+    // const listItems = data.map((d) =><ul className="Label">{d.lang}</ul> );
 
     return (
       <div className="Admin">
@@ -43,8 +85,11 @@ class Admin extends Component {
         <Row>
             <h2>Vote Count</h2>
             <ul>
-                {listItems}
+                <li>ironman :-- {this.state.storageValue1}</li>
+                <li>cap :-- {this.state.storageValue2}</li>
+                <li>pepper :-- {this.state.storageValue3}</li>
             </ul>
+            <button onClick={this.runExample}>update</button>
         </Row>
         <br/><hr/>
         <Row>
@@ -57,7 +102,7 @@ class Admin extends Component {
                    
                         </FormGroup >
                         <FormGroup controlId="email">
-                            <ControlLabel>email</ControlLabel>
+                            <ControlLabel>aadhar</ControlLabel>
                             <FormControl type="text" name="email" placeholder="Enter your email" onChange={this.handleInputChange} />
                    
                         </FormGroup >
@@ -75,7 +120,7 @@ class Admin extends Component {
                    
                         </FormGroup >
                         <FormGroup controlId="email">
-                            <ControlLabel>email</ControlLabel>
+                            <ControlLabel>aadhar</ControlLabel>
                             <FormControl type="text" name="email" placeholder="Enter your email" onChange={this.handleInputChange} />
                    
                         </FormGroup >
