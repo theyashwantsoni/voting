@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 
-import { Row,Checkbox, Form, FormGroup, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
+import {  FormGroup, FormControl,  Button, HelpBlock } from 'react-bootstrap';
 import './login.css';
 import { isEmail, isEmpty, isLength, isContainWhiteSpace } from '../../shared/validator';
 class Login extends Component {
@@ -100,8 +100,33 @@ class Login extends Component {
         const { errors, formSubmitted } = this.state;
 
         return (
-            <div className="Login">
-                <Row>
+            <div>
+            <h1 class="login-header">Blockchain based voting system.</h1>
+            <div className="login">
+            {/* <div class="login-triangle"></div> */}
+            <h2 class="login-header">Log in</h2>
+            <form class="login-container" onSubmit={this.login}>
+                <p><FormGroup controlId="email" validationState={ formSubmitted ? (errors.email ? 'error' : 'success') : null }>
+                            <FormControl type="text" name="email" placeholder="Enter your email" onChange={this.handleInputChange} />
+                        { errors.email && 
+                            <HelpBlock>{errors.email}</HelpBlock> 
+                        }
+                        </FormGroup ></p>
+                <p> <FormGroup controlId="password" validationState={ formSubmitted ? (errors.password ? 'error' : 'success') : null }>
+                            <FormControl type="password" name="password" placeholder="Enter your aadhar" onChange={this.handleInputChange} />
+                        { errors.password && 
+                            <HelpBlock>{errors.password}</HelpBlock> 
+                        }
+                        </FormGroup>
+                        </p>
+                        {/* <p><div><label>remember me</label><input type="checkbox" checked={this.state.checkboxChecked} onChange={this.handleChange}/>
+                        </div></p> */}
+                <p><Button type="submit" bsStyle="primary">Sign-In</Button>
+                        { errors.auth && 
+                            <HelpBlock>{errors.auth}</HelpBlock> 
+                        }</p>
+            </form>
+                {/* <Row>
                     <form onSubmit={this.login}>
                         <FormGroup controlId="email" validationState={ formSubmitted ? (errors.email ? 'error' : 'success') : null }>
                             <ControlLabel>Email</ControlLabel>
@@ -124,7 +149,8 @@ class Login extends Component {
                             <HelpBlock>{errors.auth}</HelpBlock> 
                         }
                     </form>
-                </Row>
+                </Row> */}
+            </div>
             </div>
         )
     }

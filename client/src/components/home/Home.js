@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Row,Checkbox, Form, FormGroup, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
+import { Row, FormGroup, FormControl, Button } from 'react-bootstrap';
 import './home.css';
-import { isEmail, isEmpty, isLength, isContainWhiteSpace } from '../../shared/validator';
+import {  isEmpty } from '../../shared/validator';
 import Election from "../../contracts/Election.json";
 import getWeb3 from "../../utils/getWeb3";
-import Web3 from 'web3'
+// import Web3 from 'web3'
 class Home extends Component {
     constructor(props) {
         super(props)        
@@ -66,16 +66,16 @@ class Home extends Component {
         
         e.preventDefault();
         const { formData } = this.state;
-        const { history } = this.props;
+        // const { history } = this.props;
             
         if (isEmpty(formData.vote)) {
             alert("vote can't be blank");
+            
         } else{
-                alert(formData.vote);
-                const { accounts, contract ,hasaadhar} = this.state;
-              
-                await contract.methods.castVote(hasaadhar,formData.vote).send({ from: accounts[0] });
-                const response = await contract.methods.get(formData.vote).call();
+                alert(formData.vote+"----"+formData.aadhar);
+                const { accounts, contract } = this.state;
+                await contract.methods.castVote(formData.aadhar,formData.vote).send({ from: accounts[0] });
+                // const response = await contract.methods.get(formData.vote).call();
                 
         }
 
@@ -87,7 +87,12 @@ class Home extends Component {
     const data =[{"lang":"ironman","val":"11111111"},{"lang":"captainAmreica","val":"22222222"},{"lang":"pepper","val":"33333333"}];
     const listItems = data.map((d) =><label className="Label"><input type="radio" name="vote" onChange={this.handleInputChange}  value={d.val}/>{d.lang}</label> );
     return (
-      <div className="Home">
+      <div>
+                <h2 class="login-header">Home Page</h2>
+                <marquee>Welcome To blockchain based voting system</marquee>
+                <p>welcome {sessionStorage.getItem('user') && (JSON.stringify(sessionStorage.getItem('user')))}</p>
+        {/* <p>pass :-- {sessionStorage.getItem('aadhar') && (JSON.stringify(sessionStorage.getItem('aadhar')))}</p> */}
+      <div className=" Home">
       {/* <h1>Good to Go!</h1>
         <p>Your Truffle Box is installed and ready.</p>
         <h2>Smart Contract Example</h2>
@@ -99,27 +104,27 @@ class Home extends Component {
           Try changing the value stored on <strong>line 40</strong> of App.js.
         </p>
         <div>The stored value is: {this.state.storageValue}</div> */}
-        <h2>Home Page</h2>
-        <marquee>Welcome To blockchain based voting system</marquee>
-        <p>welcome {sessionStorage.getItem('user') && (JSON.stringify(sessionStorage.getItem('user')))}</p>
-        <p>aadhar :-- {sessionStorage.getItem('aadhar') && (JSON.stringify(sessionStorage.getItem('aadhar')))}</p>
+        
 
-         <b>Who will die in endgame?</b> <br/>
+         
         <Row>
                     <form onSubmit={this.castvote}>
-                                                   {/* <Form.Check disabled type={type} label={`disabled ${type}`} id={`disabled-default-${type}`}/> */}
-
-                        {/* <FormGroup controlId="password" >
-                            <ControlLabel>Password</ControlLabel>
-                            <FormControl type="radio" name="radio"/>
-                            
-                        </FormGroup> */}
+                    <p><FormGroup controlId="aadhar" class="text-input">
+                            <FormControl type="text" name="aadhar"id="input1" placeholder="Enter your aadhar" onChange={this.handleInputChange} />
+                        {/* { errors.email && 
+                            <HelpBlock>{errors.aadhar}</HelpBlock> 
+                        } */}
+                   
+                        </FormGroup ></p>
+                        <b>vote - Who will die in endgame?</b> <br/>
+                                               
                         {listItems}
                     
                         <Button type="submit" bsStyle="primary">cast vote</Button>
                         
                     </form>
         </Row>
+      </div>
       </div>
     );
   }

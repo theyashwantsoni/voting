@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Row,Checkbox, Form, FormGroup, FormControl, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
+import { Row,FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap';
 import './admin.css';
-import { isEmail, isEmpty, isLength, isContainWhiteSpace } from '../../shared/validator';
+import { isEmpty } from '../../shared/validator';
 import Election from "../../contracts/Election.json";
 import getWeb3 from "../../utils/getWeb3";
-import Web3 from 'web3'
+// import Web3 from 'web3'
 class Admin extends Component {
     constructor(props) {
         super(props)        
@@ -43,7 +43,7 @@ class Admin extends Component {
       };
     
       runExample = async () => {
-        const { accounts, contract } = this.state;
+        const {  contract } = this.state;
 
         const response1 = await contract.methods.get(11111111).call();
         const response2 = await contract.methods.get(22222222).call();
@@ -53,7 +53,21 @@ class Admin extends Component {
         this.setState({ storageValue2: response2 });
         this.setState({ storageValue3: response3 });
       };
-  
+        addvoter = async (e) => {
+            e.preventDefault();
+            const { formData } = this.state;                
+            if (isEmpty(formData.name)) {
+                alert("name can't be blank");
+                
+            }else if (isEmpty(formData.aadhar)) {
+                alert("aadhar can't be blank");
+                
+            } else{
+           
+                    const { accounts, contract } = this.state;
+                    await contract.methods.registerVoter(formData.aadhar,formData.name).send({ from: accounts[0] });                    
+            }
+      };
     handleInputChange = (event) => {
         const target = event.target;
         const value = target.value;
@@ -68,18 +82,18 @@ class Admin extends Component {
     }
 
   render() {
-    const data =[{"lang":"ironman","val":"11111111"},{"lang":"captainAmreica","val":"22222222"},{"lang":"pepper","val":"33333333"}];
+    // const data =[{"lang":"ironman","val":"11111111"},{"lang":"captainAmreica","val":"22222222"},{"lang":"pepper","val":"33333333"}];
     // const listItems = data.map((d) =><ul className="Label">{d.lang}</ul> );
 
     return (
       <div className="Admin">
         <h2>Admin Page</h2>
         <Row>
-            <form >
+           
                 <Button className="Givemepad" type="submit" bsStyle="primary">start voting</Button>
         
                 <Button type="submit" bsStyle="primary">stop voting</Button>
-            </form>
+            
         </Row>
         <br/><hr/>
         <Row>
@@ -92,7 +106,7 @@ class Admin extends Component {
             <button onClick={this.runExample}>update</button>
         </Row>
         <br/><hr/>
-        <Row>
+        {/* <Row>
         <h2>add Candidate</h2>
 
                     <form >
@@ -106,22 +120,22 @@ class Admin extends Component {
                             <FormControl type="text" name="email" placeholder="Enter your email" onChange={this.handleInputChange} />
                    
                         </FormGroup >
-                        <Button type="submit" bsStyle="primary">add</Button>
+                        <Button type="submit" bsStyle="primary" disabled>add</Button>
                         
                     </form>
         </Row>
-        <br/><hr/>
+        <br/><hr/> */}
         <Row>
         <h2>add voter</h2>
-                    <form >
+                    <form onSubmit={this.addvoter}>
                         <FormGroup controlId="email">
                             <ControlLabel>name</ControlLabel>
-                            <FormControl type="text" name="email" placeholder="Enter your email" onChange={this.handleInputChange} />
+                            <FormControl type="text" name="name" placeholder="Enter name" onChange={this.handleInputChange} />
                    
                         </FormGroup >
                         <FormGroup controlId="email">
                             <ControlLabel>aadhar</ControlLabel>
-                            <FormControl type="text" name="email" placeholder="Enter your email" onChange={this.handleInputChange} />
+                            <FormControl type="text" name="aadhar" placeholder="Enter aadhar" onChange={this.handleInputChange} />
                    
                         </FormGroup >
                         <Button type="submit" bsStyle="primary">add</Button>
