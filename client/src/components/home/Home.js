@@ -41,15 +41,6 @@ class Home extends Component {
         }
       };
     
-      // runExample = async () => {
-      //   const { accounts, contract } = this.state;
-    
-      //   await contract.methods.set(1000).send({ from: accounts[0] });
-    
-      //   const response = await contract.methods.get().call();
-    
-      //   this.setState({ storageValue: response });
-      // };
     handleInputChange = (event) => {
         const target = event.target;
         const value = target.value;
@@ -66,67 +57,61 @@ class Home extends Component {
         
         e.preventDefault();
         const { formData } = this.state;
-        // const { history } = this.props;
-            
         if (isEmpty(formData.vote)) {
             alert("vote can't be blank");
             
-        } else{
-                alert(formData.vote+"----"+formData.aadhar);
-                const { accounts, contract } = this.state;
-                await contract.methods.castVote(formData.aadhar,formData.vote).send({ from: accounts[0] });
-                // const response = await contract.methods.get(formData.vote).call();
+        }else{
                 
+                try {
+                  
+                  const { accounts, contract } = this.state;
+                  await contract.methods.castVote(formData.aadhar,formData.vote).send({ from: accounts[0] });
+                  alert('thanks for vote');
+                } catch (error) {
+                  
+                 
+                  alert(error);
+                }
         }
+        
+        
 
     }
   render() {
     if (!this.state.web3) {
         return <div>Loading Web3, accounts, and contract...</div>;
-      }
-    const data =[{"lang":"ironman","val":"11111111"},{"lang":"captainAmreica","val":"22222222"},{"lang":"pepper","val":"33333333"}];
+      }else{
+    const otpp=sessionStorage.getItem('otp');
+    const data =[{"lang":"ironman","val":"11111111"},{"lang":"captainAmreica","val":"22222222"},{"lang":"pepper","val":"33333333"},{"lang":"rocket","val":"44444444"}];
     const listItems = data.map((d) =><label className="Label"><input type="radio" name="vote" onChange={this.handleInputChange}  value={d.val}/>{d.lang}</label> );
     return (
       <div>
                 <h2 class="login-header">Home Page</h2>
-                <marquee>Welcome To blockchain based voting system</marquee>
-                <p>welcome {sessionStorage.getItem('user') && (JSON.stringify(sessionStorage.getItem('user')))}</p>
-        {/* <p>pass :-- {sessionStorage.getItem('aadhar') && (JSON.stringify(sessionStorage.getItem('aadhar')))}</p> */}
+                <marquee class="colorfont">Welcome To blockchain based voting system</marquee>
+                <p class="colorfont aligncenter">Phone : {sessionStorage.getItem('user') && (JSON.stringify(sessionStorage.getItem('user')))}</p>
+                <p class="colorfont aligncenter">Aadhar : {sessionStorage.getItem('aadhar') && (JSON.stringify(sessionStorage.getItem('aadhar')))}</p>
+
       <div className=" Home">
-      {/* <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 40</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div> */}
-        
+     
 
          
-        <Row>
-                    <form onSubmit={this.castvote}>
-                    <p><FormGroup controlId="aadhar" class="text-input">
-                            <FormControl type="text" name="aadhar"id="input1" placeholder="Enter your aadhar" onChange={this.handleInputChange} />
-                        {/* { errors.email && 
-                            <HelpBlock>{errors.aadhar}</HelpBlock> 
-                        } */}
-                   
-                        </FormGroup ></p>
-                        <b>vote - Who will die in endgame?</b> <br/>
-                                               
-                        {listItems}
-                    
-                        <Button type="submit" bsStyle="primary">cast vote</Button>
-                        
+        <Row class="setbg">
+        <div class="aligncenter question"><b>vote - Who will die in endgame?</b> <br/></div>
+                    <form class="form1"onSubmit={this.castvote}>
+                    <p class="card">
+                       {listItems}
+                    </p>
+                    <p >
+                      <FormGroup controlId="aadhar" >
+                            <FormControl class="theinput" type="text" name="aadhar"id="input1" placeholder="Enter your aadhar" onChange={this.handleInputChange} />
+                      </FormGroup >
+                    </p>
+                        <Button type="submit" bsStyle="primary">cast vote</Button> 
                     </form>
         </Row>
       </div>
       </div>
-    );
+      );}
   }
 }
 

@@ -68,6 +68,22 @@ class Admin extends Component {
                     await contract.methods.registerVoter(formData.aadhar,formData.name).send({ from: accounts[0] });                    
             }
       };
+    //   startvoting = async () => {
+    //     // e.preventDefault();
+    //     const { accounts, contract } = this.state;
+    //     await contract.methods.startElection().send({ from: accounts[0] });                    
+    //     const response4 = await contract.methods.electionsState().call();
+
+    //     this.setState({ storageValue1: response4 });
+    // };
+    // endvoting = async () => {
+    //     // e.preventDefault();
+    //     const { accounts, contract } = this.state;
+    //     await contract.methods.endElection().send({ from: accounts[0] });                    
+    //     const response4 = await contract.methods.electionsState().call();
+
+    //     this.setState({ storageValue1: response4 });
+    // };
     handleInputChange = (event) => {
         const target = event.target;
         const value = target.value;
@@ -86,14 +102,14 @@ class Admin extends Component {
     // const listItems = data.map((d) =><ul className="Label">{d.lang}</ul> );
 
     return (
-      <div className="Admin">
-        <h2>Admin Page</h2>
+        <div>
+        <h1 class="login-header">Admin Page</h1>
+
+      <div className="Admin ">
         <Row>
-           
-                <Button className="Givemepad" type="submit" bsStyle="primary">start voting</Button>
-        
-                <Button type="submit" bsStyle="primary">stop voting</Button>
             
+            <button class="Givemepad" onClick={this.runExample}>Start Voting</button>
+            <button onClick={this.runExample}>Stop Voting</button>
         </Row>
         <br/><hr/>
         <Row>
@@ -106,35 +122,18 @@ class Admin extends Component {
             <button onClick={this.runExample}>update</button>
         </Row>
         <br/><hr/>
-        {/* <Row>
-        <h2>add Candidate</h2>
 
-                    <form >
-                        <FormGroup controlId="email">
-                            <ControlLabel>name</ControlLabel>
-                            <FormControl type="text" name="email" placeholder="Enter your email" onChange={this.handleInputChange} />
-                   
-                        </FormGroup >
-                        <FormGroup controlId="email">
-                            <ControlLabel>aadhar</ControlLabel>
-                            <FormControl type="text" name="email" placeholder="Enter your email" onChange={this.handleInputChange} />
-                   
-                        </FormGroup >
-                        <Button type="submit" bsStyle="primary" disabled>add</Button>
-                        
-                    </form>
-        </Row>
-        <br/><hr/> */}
         <Row>
-        <h2>add voter</h2>
+        <h2>Add Voter</h2>
                     <form onSubmit={this.addvoter}>
                         <FormGroup controlId="email">
-                            <ControlLabel>name</ControlLabel>
+                          
                             <FormControl type="text" name="name" placeholder="Enter name" onChange={this.handleInputChange} />
                    
                         </FormGroup >
+                        <br/>
                         <FormGroup controlId="email">
-                            <ControlLabel>aadhar</ControlLabel>
+                     
                             <FormControl type="text" name="aadhar" placeholder="Enter aadhar" onChange={this.handleInputChange} />
                    
                         </FormGroup >
@@ -142,6 +141,7 @@ class Admin extends Component {
                         
                     </form>
         </Row>
+      </div>
       </div>
     );
   }
