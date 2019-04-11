@@ -63,27 +63,27 @@ class Admin extends Component {
                 alert("aadhar can't be blank");
                 
             } else{
-           
+                  
                     const { accounts, contract } = this.state;
                     await contract.methods.registerVoter(formData.aadhar,formData.name).send({ from: accounts[0] });                    
             }
       };
-    //   startvoting = async () => {
-    //     // e.preventDefault();
-    //     const { accounts, contract } = this.state;
-    //     await contract.methods.startElection().send({ from: accounts[0] });                    
-    //     const response4 = await contract.methods.electionsState().call();
+      startvoting = async () => {
+        // e.preventDefault();
+        const { accounts, contract } = this.state;
+        await contract.methods.startElection().send({ from: accounts[0] });                    
+        const response4 = await contract.methods.electionsState().call();
 
-    //     this.setState({ storageValue1: response4 });
-    // };
-    // endvoting = async () => {
-    //     // e.preventDefault();
-    //     const { accounts, contract } = this.state;
-    //     await contract.methods.endElection().send({ from: accounts[0] });                    
-    //     const response4 = await contract.methods.electionsState().call();
+        this.setState({ storageValue1: response4 });
+    };
+    endvoting = async () => {
+        // e.preventDefault();
+        const { accounts, contract } = this.state;
+        await contract.methods.endElection().send({ from: accounts[0] });                    
+        const response4 = await contract.methods.electionsState().call();
 
-    //     this.setState({ storageValue1: response4 });
-    // };
+        this.setState({ storageValue1: response4 });
+    };
     handleInputChange = (event) => {
         const target = event.target;
         const value = target.value;
@@ -108,8 +108,8 @@ class Admin extends Component {
       <div className="Admin ">
         <Row>
             
-            <button class="Givemepad" onClick={this.runExample}>Start Voting</button>
-            <button onClick={this.runExample}>Stop Voting</button>
+            <button class="Givemepad" onClick={this.startvoting}>Start Voting</button>
+            <button onClick={this.endvoting}>Stop Voting</button>
         </Row>
         <br/><hr/>
         <Row>
