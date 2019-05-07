@@ -82,7 +82,7 @@ class Home extends Component {
         return <div>Loading Web3, accounts, and contract...</div>;
       }else{
     const otpp=sessionStorage.getItem('otp');
-    const data =[{"lang":"ironman","val":"11111111"},{"lang":"captainAmreica","val":"22222222"},{"lang":"pepper","val":"33333333"},{"lang":"rocket","val":"44444444"}];
+    const data =[{"lang":"Bhartiya Janata Party","val":"11111111"},{"lang":"Indian National Congress","val":"22222222"},{"lang":"NDA","val":"33333333"},{"lang":"NOTA","val":"44444444"}];
     const listItems = data.map((d) =><label className="Label"><input type="radio" name="vote" onChange={this.handleInputChange}  value={d.val}/>{d.lang}</label> );
     return (
       <div>
@@ -96,7 +96,7 @@ class Home extends Component {
 
          
         <Row class="setbg">
-        <div class="aligncenter question"><b>vote - Who will die in endgame?</b> <br/></div>
+        <div class="aligncenter question"><b>vote -> Who do you want to vote for Lok Sabha Election of 2019?</b> <br/></div>
                     <form class="form1"onSubmit={this.castvote}>
                     <p class="card">
                        {listItems}

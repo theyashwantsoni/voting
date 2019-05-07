@@ -16,7 +16,7 @@ class Admin extends Component {
             formSubmitted: false,
             loading: false ,
             storageValue2: 0, web3: null, accounts: null, contract: null,
-            storageValue1:0,storageValue3:0
+            storageValue1:0,storageValue3:0,storageValue4:0
         };
     } 
     componentDidMount = async () => {
@@ -48,10 +48,11 @@ class Admin extends Component {
         const response1 = await contract.methods.get(11111111).call();
         const response2 = await contract.methods.get(22222222).call();
         const response3 = await contract.methods.get(33333333).call();
-
+        const response4 = await contract.methods.get(44444444).call();
         this.setState({ storageValue1: response1 });
         this.setState({ storageValue2: response2 });
         this.setState({ storageValue3: response3 });
+        this.setState({ storageValue4: response4 });
       };
         addvoter = async (e) => {
             e.preventDefault();
@@ -115,9 +116,10 @@ class Admin extends Component {
         <Row>
             <h2>Vote Count</h2>
             <ul>
-                <li>ironman :-- {this.state.storageValue1}</li>
-                <li>cap :-- {this.state.storageValue2}</li>
-                <li>pepper :-- {this.state.storageValue3}</li>
+                <li>Bhartiya janata Party :-- {this.state.storageValue1}</li>
+                <li>Congress :-- {this.state.storageValue2}</li>
+                <li>NDA :-- {this.state.storageValue3}</li>
+                <li>NOTA :-- {this.state.storageValue4}</li>
             </ul>
             <button onClick={this.runExample}>update</button>
         </Row>

@@ -10,9 +10,10 @@ contract Election {
     
     constructor() public{
         electionState = true;
-        registerCandidate(11111111,'ironman');
-        registerCandidate(22222222,'cap');
-        registerCandidate(33333333,'thor');
+        registerCandidate(11111111,'Bhartiya Janta Party');
+        registerCandidate(22222222,'Congress');
+        registerCandidate(33333333,'NDA');
+        registerCandidate(44444444,'NOTA');
         registerVoter(99999999,'diana');
         registerVoter(88888888,'msPotts');
         registerVoter(77777777,'carol');
